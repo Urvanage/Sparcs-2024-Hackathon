@@ -158,33 +158,6 @@ class _DisplayState extends State<Display> {
                     ),
                   ),
                 ),
-                // ElevatedButton(
-                //   onPressed: () {},
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: const Color.fromRGBO(194, 228, 254, 1),
-                //     elevation: 0,
-                //     minimumSize: const Size(70, 40),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(20),
-                //     ),
-                //   ),
-                //   child: const Row(
-                //     crossAxisAlignment: CrossAxisAlignment.end,
-                //     children: [
-                //       Icon(
-                //         Icons.room,
-                //         size: 18,
-                //         color: Colors.black,
-                //       ),
-                //       Text(
-                //         "음식점",
-                //         style: TextStyle(
-                //           color: Colors.black,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 const Spacer(),
                 Container(
                   margin: const EdgeInsets.all(15.0),

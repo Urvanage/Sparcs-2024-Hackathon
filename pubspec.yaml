@@ -64,6 +64,9 @@ flutter:
   assets:
     - assets/background.jpeg
     - assets/다운로드.jpeg
+    - assets/food1.jpeg
+    - assets/food2.jpeg
+    - assets/food3.jpeg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

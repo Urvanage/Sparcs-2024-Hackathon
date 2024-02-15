@@ -4,6 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'dart:math' as math;
 
 import 'package:front/detailstore.dart';
+import 'package:front/tagandelse.dart';
 
 double degress = 345;
 double radians = degress * math.pi / 180;
@@ -45,7 +46,8 @@ class _DisplayState extends State<Display> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
-        child: Column(
+        child: ListView(
+          scrollDirection: Axis.vertical,
           children: [
             const SizedBox(
               height: 60,
@@ -158,7 +160,6 @@ class _DisplayState extends State<Display> {
                     ),
                   ),
                 ),
-                const Spacer(),
                 Container(
                   margin: const EdgeInsets.all(15.0),
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -206,252 +207,16 @@ class _DisplayState extends State<Display> {
                 ),
               ],
             ),
-            Column(
+            const Column(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DetailStore()));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Container(
-                      height: 250,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(25),
-                        image: const DecorationImage(
-                          image: AssetImage("assets/background.jpeg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 10,
-                            right: 15,
-                            child: Transform.rotate(
-                              angle: radians,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: const Color.fromRGBO(168, 174, 250, 1),
-                                ),
-                                width: 110,
-                                height: 150,
-                                child: const Text("탱쓰\n\n유성 맛집 인정입니다. 진짜 최고의 맛이고, 오늘은 12시 넘어서 갔는데 사람이...",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              height: 100, // 이미지의 아래 부분을 어둡게 할 높이
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                gradient: LinearGradient(
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                  colors: [Colors.black.withOpacity(0.6), Colors.transparent],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Positioned(
-                            bottom: 20,
-                            left: 0,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("뒤집어진 뚝배기",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      )),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text("6,000원",
-                                          style: TextStyle(
-                                            color: Color.fromRGBO(208, 232, 51, 1),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text("김치찌개",
-                                          style: TextStyle(
-                                            color: Color.fromRGBO(222, 222, 227, 1),
-                                            fontSize: 13,
-                                          )),
-                                      SizedBox(
-                                        width: 110,
-                                      ),
-                                      Icon(
-                                        Icons.room,
-                                        color: Color.fromRGBO(184, 184, 190, 1),
-                                        size: 15,
-                                      ),
-                                      SizedBox(width: 1),
-                                      Text("500m",
-                                          style: TextStyle(
-                                            color: Color.fromRGBO(184, 184, 190, 1),
-                                            fontSize: 12,
-                                          )),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Color.fromRGBO(184, 184, 190, 1),
-                                        size: 15,
-                                      ),
-                                      SizedBox(width: 1),
-                                      Text("4.6",
-                                          style: TextStyle(
-                                            color: Color.fromRGBO(184, 184, 190, 1),
-                                            fontSize: 12,
-                                          )),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Container(
-                    height: 250,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(25),
-                      image: const DecorationImage(
-                        image: AssetImage("assets/background.jpeg"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 10,
-                          right: 15,
-                          child: Transform.rotate(
-                            angle: radians,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: const Color.fromRGBO(168, 174, 250, 1),
-                              ),
-                              width: 110,
-                              height: 150,
-                              child: const Text("탱쓰\n\n유성 맛집 인정입니다. 진짜 최고의 맛이고, 오늘은 12시 넘어서 갔는데 사람이...",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  )),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            height: 100, // 이미지의 아래 부분을 어둡게 할 높이
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              gradient: LinearGradient(
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                                colors: [Colors.black.withOpacity(0.6), Colors.transparent],
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Positioned(
-                          bottom: 20,
-                          left: 0,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("뒤집어진 뚝배기",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                    )),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text("6,000원",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(208, 232, 51, 1),
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text("김치찌개",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(222, 222, 227, 1),
-                                          fontSize: 13,
-                                        )),
-                                    SizedBox(
-                                      width: 110,
-                                    ),
-                                    Icon(
-                                      Icons.room,
-                                      color: Color.fromRGBO(184, 184, 190, 1),
-                                      size: 15,
-                                    ),
-                                    SizedBox(width: 1),
-                                    Text("500m",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(184, 184, 190, 1),
-                                          fontSize: 12,
-                                        )),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Color.fromRGBO(184, 184, 190, 1),
-                                      size: 15,
-                                    ),
-                                    SizedBox(width: 1),
-                                    Text("4.6",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(184, 184, 190, 1),
-                                          fontSize: 12,
-                                        )),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                StoreWidget(),
+                StoreWidget(),
+                StoreWidget(),
               ],
             ),
-            const Spacer(),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               decoration: BoxDecoration(
@@ -468,26 +233,31 @@ class _DisplayState extends State<Display> {
                     const Column(
                       children: [Icon(Icons.store), Text("가게")],
                     ),
-                    Transform.translate(
-                      offset: const Offset(20, -10),
-                      child: Container(
-                        width: 65,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Column(
-                          children: [
-                            Icon(Icons.brush, color: Colors.white),
-                            Text(
-                              "후기",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Text(
-                              "작성하기",
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TagandRecomm(isValid: false)));
+                      },
+                      child: Transform.translate(
+                        offset: const Offset(20, -10),
+                        child: Container(
+                          width: 65,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Column(
+                            children: [
+                              Icon(Icons.brush, color: Colors.white),
+                              Text(
+                                "후기",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                "작성하기",
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -501,28 +271,143 @@ class _DisplayState extends State<Display> {
           ],
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   height: 80,
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(25),
-      //     boxShadow: const [
-      //       BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-      //     ],
-      //   ),
-      //   child: ClipRRect(
-      //     borderRadius: BorderRadius.circular(25),
-      //     child: BottomNavigationBar(
-      //       items: const <BottomNavigationBarItem>[
-      //         BottomNavigationBarItem(icon: Icon(Icons.store), label: '가게'),
-      //         BottomNavigationBarItem(icon: Icon(Icons.brush), label: '후기 작성'),
-      //         BottomNavigationBarItem(icon: Icon(Icons.person), label: '마이페이지'),
-      //       ],
-      //       currentIndex: _selectedIndex,
-      //       selectedItemColor: Colors.green,
-      //       onTap: _onItemTapped,
-      //     ),
-      //   ),
-      // )
+    );
+  }
+}
+
+class StoreWidget extends StatelessWidget {
+  const StoreWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DetailStore()));
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Container(
+          height: 250,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(25),
+            image: const DecorationImage(
+              image: AssetImage("assets/background.jpeg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 10,
+                right: 15,
+                child: Transform.rotate(
+                  angle: radians,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color.fromRGBO(168, 174, 250, 1),
+                    ),
+                    width: 110,
+                    height: 150,
+                    child: const Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: Text("\n탱쓰\n\n유성 맛집 인정입니다. 진짜 최고의 맛이고, 오늘은 12시 넘어서 갔는데 사람이...",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 100, // 이미지의 아래 부분을 어둡게 할 높이
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                    ),
+                  ),
+                ),
+              ),
+              const Positioned(
+                bottom: 20,
+                left: 0,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("뒤집어진 뚝배기",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          )),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text("6,000원",
+                              style: TextStyle(
+                                color: Color.fromRGBO(208, 232, 51, 1),
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text("김치찌개",
+                              style: TextStyle(
+                                color: Color.fromRGBO(222, 222, 227, 1),
+                                fontSize: 13,
+                              )),
+                          SizedBox(
+                            width: 110,
+                          ),
+                          Icon(
+                            Icons.room,
+                            color: Color.fromRGBO(184, 184, 190, 1),
+                            size: 15,
+                          ),
+                          SizedBox(width: 1),
+                          Text("500m",
+                              style: TextStyle(
+                                color: Color.fromRGBO(184, 184, 190, 1),
+                                fontSize: 12,
+                              )),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Color.fromRGBO(184, 184, 190, 1),
+                            size: 15,
+                          ),
+                          SizedBox(width: 1),
+                          Text("4.6",
+                              style: TextStyle(
+                                color: Color.fromRGBO(184, 184, 190, 1),
+                                fontSize: 12,
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

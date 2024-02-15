@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/widgets.dart';
+import 'package:front/verifyreceipt.dart';
+import 'package:front/tagbubble.dart';
 
 /// Clip widget in star shape
 class StarClipper extends CustomClipper<Path> {
@@ -68,6 +70,7 @@ class _DetailStoreState extends State<DetailStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         scrollDirection: Axis.vertical,
@@ -77,12 +80,15 @@ class _DetailStoreState extends State<DetailStore> {
           ),
           Row(
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back),
-                iconSize: 25,
+              Transform.translate(
+                offset: const Offset(-12, 0),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                  iconSize: 25,
+                ),
               ),
             ],
           ),
@@ -102,31 +108,38 @@ class _DetailStoreState extends State<DetailStore> {
                     right: 15,
                     child: Container(
                         decoration: BoxDecoration(
-                          color: const Color.fromRGBO(223, 236, 134, 1),
-                          borderRadius: BorderRadius.circular(5),
+                          color: const Color.fromRGBO(238, 248, 240, 1),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 size: 17,
-                                color: Color.fromRGBO(102, 116, 9, 1),
+                                color: Color.fromRGBO(88, 192, 108, 1),
                               ),
-                              Text(
-                                "추천",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(102, 116, 9, 1),
+                              Transform.translate(
+                                offset: const Offset(0, -1),
+                                child: const Text(
+                                  "추천",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(88, 192, 108, 1),
+                                  ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
-                              Text(
+                              const Text(
                                 "81%",
                                 style: TextStyle(
-                                  color: Color.fromRGBO(102, 116, 9, 1),
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(88, 192, 108, 1),
                                 ),
                               )
                             ],
@@ -287,6 +300,11 @@ class _DetailStoreState extends State<DetailStore> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 20),
+          Divider(
+            thickness: 8,
+            color: Colors.grey[200],
           ),
           const SizedBox(
             height: 20,
@@ -473,7 +491,7 @@ class _DetailStoreState extends State<DetailStore> {
                 child: Container(
                   height: 45,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: const Color.fromRGBO(217, 217, 217, 1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Padding(
@@ -515,7 +533,7 @@ class _DetailStoreState extends State<DetailStore> {
                 child: Container(
                   height: 45,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: const Color.fromRGBO(217, 217, 217, 1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Padding(
@@ -867,23 +885,28 @@ class _DetailStoreState extends State<DetailStore> {
                     color: const Color.fromRGBO(238, 248, 240, 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.border_color,
                         size: 22,
                         color: Color.fromRGBO(88, 192, 108, 1),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        "리뷰 작성하기",
-                        style: TextStyle(
-                          color: Color.fromRGBO(88, 192, 108, 1),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const VerifyReceipt()));
+                        },
+                        child: const Text(
+                          "리뷰 작성하기",
+                          style: TextStyle(
+                            color: Color.fromRGBO(88, 192, 108, 1),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
                       )
                     ],
@@ -1079,49 +1102,6 @@ class ReviewWidget extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class tagbubble extends StatelessWidget {
-  Color back;
-  Color text;
-  String tagName;
-  int tagCount;
-
-  tagbubble({
-    required this.back,
-    required this.text,
-    required this.tagName,
-    required this.tagCount,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    String countText = tagCount > 0 ? ' $tagCount' : ''; // Add tag count only if it's greater than 0
-
-    return Container(
-      height: 30,
-      decoration: BoxDecoration(
-        color: back,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              '$tagName$countText',
-              style: TextStyle(
-                color: text,
-              ),
-            ),
-          ),
         ),
       ),
     );

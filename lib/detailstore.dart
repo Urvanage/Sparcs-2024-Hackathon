@@ -7,65 +7,72 @@ import 'package:flutter/widgets.dart';
 import 'package:front/verifyreceipt.dart';
 import 'package:front/tagbubble.dart';
 
-/// Clip widget in star shape
-class StarClipper extends CustomClipper<Path> {
-  StarClipper(this.numberOfPoints);
-
-  /// The number of points of the star
-  final int numberOfPoints;
-
-  @override
-  Path getClip(Size size) {
-    double width = size.width;
-
-    double halfWidth = width / 2;
-
-    double bigRadius = halfWidth;
-
-    double radius = halfWidth / 2;
-
-    double degreesPerStep = _degToRad(360 / numberOfPoints) as double;
-
-    double halfDegreesPerStep = degreesPerStep / 2;
-
-    var path = Path();
-
-    double max = 2 * math.pi;
-
-    path.moveTo(width, halfWidth);
-
-    for (double step = 0; step < max; step += degreesPerStep) {
-      path.lineTo(halfWidth + bigRadius * math.cos(step), halfWidth + bigRadius * math.sin(step));
-      path.lineTo(halfWidth + radius * math.cos(step + halfDegreesPerStep), halfWidth + radius * math.sin(step + halfDegreesPerStep));
-    }
-
-    path.close();
-    return path;
-  }
-
-  num _degToRad(num deg) => deg * (math.pi / 180.0);
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    StarClipper oldie = oldClipper as StarClipper;
-    return numberOfPoints != oldie.numberOfPoints;
-  }
-}
-
 class DetailStore extends StatefulWidget {
-  const DetailStore({super.key});
+  final bool isWritten;
+
+  final String storeName, introduction, address, recommend, picture, callNumber, workingTime, reviewCount, mainFood, price;
+  final double latitude, longitude;
+
+  const DetailStore({
+    required this.storeName,
+    required this.price,
+    required this.mainFood,
+    required this.latitude,
+    required this.longitude,
+    required this.picture,
+    required this.reviewCount,
+    required this.workingTime,
+    required this.callNumber,
+    required this.address,
+    required this.introduction,
+    required this.recommend,
+    required this.isWritten,
+    super.key,
+  });
 
   @override
   State<DetailStore> createState() => _DetailStoreState();
 }
 
 class _DetailStoreState extends State<DetailStore> {
+  final GlobalKey _globalKey = GlobalKey();
+
+  void scrollToWidget() {
+    if (widget.isWritten && _globalKey.currentContext != null) {
+      Scrollable.ensureVisible(
+        _globalKey.currentContext!,
+      );
+    }
+  }
+
   List<String> good = ["재료가 신선해요", "매장이 깨끗해요", "음식이 맛있어요"];
   List<String> bad = ["음식이 늦게 나와요", "주차가 불편해요", "매장이 시끄러워요"];
   String? selectedValue;
   List<String> items2 = ["최신순", "추천순"];
 
   List<String> review1 = ["매장이 깨끗해요", "음식이 맛있어요", "음식이 늦게 나와요"];
+
+  // late double percent;
+  // late DecorationImage image;
+  // _DetailStoreState() {
+  //   if (widget.picture == 'assets/background.jpeg') {
+  //     image = DecorationImage(
+  //       image: AssetImage(widget.picture),
+  //       fit: BoxFit.cover,
+  //     );
+  //   } else {
+  //     image = DecorationImage(
+  //       image: AssetImage(widget.picture),
+  //       //image: NetworkImage(widget.picture!),
+  //       fit: BoxFit.cover,
+  //     );
+  //   }
+
+  //   // 위에서 이미 null일 경우 처리하였으므로 널 체크 연산자 사용 필요 없음
+  //   int recommendCount = int.tryParse(widget.recommend ?? '') ?? 0;
+  //   int totalCount = int.tryParse(widget.reviewCount ?? '') ?? 1;
+  //   percent = (recommendCount / totalCount) * 100;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +104,7 @@ class _DetailStoreState extends State<DetailStore> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               image: const DecorationImage(
-                image: AssetImage("assets/background.jpeg"),
+                image: AssetImage('assets/background.jpeg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -148,23 +155,23 @@ class _DetailStoreState extends State<DetailStore> {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "뒤집어진 뚝배기",
-                  style: TextStyle(
+                  widget.storeName,
+                  style: const TextStyle(
                     fontSize: 25,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 7,
                 ),
-                Text(
+                const Text(
                   "한식",
                   style: TextStyle(
                     fontSize: 15,
@@ -175,11 +182,11 @@ class _DetailStoreState extends State<DetailStore> {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              "저렴한 가격과 전통의 맛집으로 SBS 생방송 투데이에 소개되었으며 각종 매스컴이 극찬한 명품 맛집이다.",
-              style: TextStyle(
+              widget.introduction,
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 13,
               ),
@@ -192,19 +199,20 @@ class _DetailStoreState extends State<DetailStore> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.room, color: Colors.grey[600]),
+                Icon(Icons.room, color: Colors.grey[600], size: 16),
                 const SizedBox(
                   width: 2,
                 ),
                 Text(
-                  "대전광역시 동구 113번길 8-11",
+                  widget.address,
                   style: TextStyle(
                     color: Colors.grey[600],
-                    fontSize: 14,
+                    fontSize: 13,
                   ),
                 ),
                 const Spacer(),
                 const Icon(
+                  size: 16,
                   Icons.map_outlined,
                   color: Colors.grey,
                 ),
@@ -231,18 +239,18 @@ class _DetailStoreState extends State<DetailStore> {
                   ),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "영업 시간",
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 4,
                     ),
-                    Text("11:30~20:30",
-                        style: TextStyle(
+                    Text(widget.workingTime,
+                        style: const TextStyle(
                           fontSize: 13,
                         )),
                   ],
@@ -258,18 +266,18 @@ class _DetailStoreState extends State<DetailStore> {
                   ),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "전화번호",
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 4,
                     ),
-                    Text("042-622-3692",
-                        style: TextStyle(
+                    Text(widget.callNumber,
+                        style: const TextStyle(
                           fontSize: 13,
                         )),
                   ],
@@ -282,18 +290,18 @@ class _DetailStoreState extends State<DetailStore> {
                   color: const Color.fromRGBO(242, 242, 246, 1),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "리뷰",
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 4,
                     ),
-                    Text("421개",
-                        style: TextStyle(
+                    Text(widget.reviewCount,
+                        style: const TextStyle(
                           fontSize: 13,
                         )),
                   ],
@@ -326,7 +334,7 @@ class _DetailStoreState extends State<DetailStore> {
                   width: 5,
                 ),
                 Text(
-                  "6",
+                  "1",
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
@@ -369,12 +377,12 @@ class _DetailStoreState extends State<DetailStore> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      "짜장면",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    Text(
+                      widget.mainFood,
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
-                    const Text("6,500원",
-                        style: TextStyle(
+                    Text(widget.price,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         )),
@@ -467,15 +475,15 @@ class _DetailStoreState extends State<DetailStore> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      "짜장면",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    Text(
+                      widget.mainFood,
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
-                    const Text("9,000원",
-                        style: TextStyle(
+                    Text("${(int.parse(widget.price.replaceAll('원', '')) + 2500).toString()}원",
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                        )),
+                        ))
                   ],
                 ),
               ),
@@ -594,12 +602,13 @@ class _DetailStoreState extends State<DetailStore> {
           const SizedBox(
             height: 20,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
+          Padding(
+            key: _globalKey,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "리뷰",
                   style: TextStyle(
                     fontSize: 20,
@@ -607,12 +616,12 @@ class _DetailStoreState extends State<DetailStore> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
-                  "243",
-                  style: TextStyle(
+                  widget.reviewCount,
+                  style: const TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
@@ -1105,5 +1114,50 @@ class ReviewWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Clip widget in star shape
+class StarClipper extends CustomClipper<Path> {
+  StarClipper(this.numberOfPoints);
+
+  /// The number of points of the star
+  final int numberOfPoints;
+
+  @override
+  Path getClip(Size size) {
+    double width = size.width;
+
+    double halfWidth = width / 2;
+
+    double bigRadius = halfWidth;
+
+    double radius = halfWidth / 2;
+
+    double degreesPerStep = _degToRad(360 / numberOfPoints) as double;
+
+    double halfDegreesPerStep = degreesPerStep / 2;
+
+    var path = Path();
+
+    double max = 2 * math.pi;
+
+    path.moveTo(width, halfWidth);
+
+    for (double step = 0; step < max; step += degreesPerStep) {
+      path.lineTo(halfWidth + bigRadius * math.cos(step), halfWidth + bigRadius * math.sin(step));
+      path.lineTo(halfWidth + radius * math.cos(step + halfDegreesPerStep), halfWidth + radius * math.sin(step + halfDegreesPerStep));
+    }
+
+    path.close();
+    return path;
+  }
+
+  num _degToRad(num deg) => deg * (math.pi / 180.0);
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    StarClipper oldie = oldClipper as StarClipper;
+    return numberOfPoints != oldie.numberOfPoints;
   }
 }

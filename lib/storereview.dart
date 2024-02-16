@@ -269,7 +269,22 @@ class _StoreReviewState extends State<StoreReview> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DetailStore()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const DetailStore(
+                              storeName: "뒤집어진 뚝배기",
+                              price: "6,500원",
+                              mainFood: "짜장면",
+                              latitude: 42.5,
+                              longitude: 42.3,
+                              picture: 'assets/background.jpeg',
+                              reviewCount: "243",
+                              workingTime: "11:30~20:30",
+                              callNumber: "042-622-3692",
+                              address: "대전광역시 동구 113번길 8-11",
+                              introduction: "저렴한 가격과 전통의 맛집으로 SBS 생방송 투데이에 소개되었으며 각종 메스컴이 극찬한 명품 맛집이다.",
+                              recommend: "10",
+                              isWritten: true,
+                            )));
                   },
                   child: Container(
                     width: 220,

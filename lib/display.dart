@@ -4,10 +4,17 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'dart:math' as math;
 
 import 'package:front/detailstore.dart';
+import 'package:front/helpers/my_flutter_app_icons.dart';
 import 'package:front/tagandelse.dart';
+
+import 'package:front/services/api_service.dart';
+import 'package:front/models/store_model.dart';
 
 double degress = 345;
 double radians = degress * math.pi / 180;
+
+double centerX = 36.3256;
+double centerY = 127.4650;
 
 class Display extends StatefulWidget {
   const Display({super.key});
@@ -19,6 +26,8 @@ class Display extends StatefulWidget {
 class _DisplayState extends State<Display> {
   int _selectedIndex = 0;
   String? dropdownValue;
+
+  final Future<List<StoreModel>> storeModels = ApiService.getStoreInfos();
 
   final List<String> items = [
     '전체',
@@ -60,7 +69,7 @@ class _DisplayState extends State<Display> {
                   style: TextStyle(
                     fontSize: 24,
                     color: Color.fromRGBO(71, 97, 198, 1),
-                    fontWeight: FontWeight.bold, // '대전'에만 bold 스타일 적용
+                    fontWeight: FontWeight.w900, // '대전'에만 bold 스타일 적용
                   ),
                 ),
                 Text(
@@ -106,6 +115,7 @@ class _DisplayState extends State<Display> {
                       Text(
                         "동구 정동",
                         style: TextStyle(
+                          fontWeight: FontWeight.w900,
                           color: Colors.black,
                         ),
                       ),
@@ -128,6 +138,7 @@ class _DisplayState extends State<Display> {
                       hint: Text(
                         '업종 선택',
                         style: TextStyle(
+                          fontWeight: FontWeight.w900,
                           fontSize: 14,
                           color: Theme.of(context).hintColor,
                         ),
@@ -160,6 +171,7 @@ class _DisplayState extends State<Display> {
                     ),
                   ),
                 ),
+                const Spacer(),
                 Container(
                   margin: const EdgeInsets.all(15.0),
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -173,6 +185,7 @@ class _DisplayState extends State<Display> {
                       hint: Text(
                         '정렬 기준',
                         style: TextStyle(
+                          fontWeight: FontWeight.w900,
                           fontSize: 11,
                           color: Theme.of(context).hintColor,
                         ),
@@ -207,84 +220,125 @@ class _DisplayState extends State<Display> {
                 ),
               ],
             ),
-            const Column(
-              children: [
-                StoreWidget(),
-                StoreWidget(),
-                StoreWidget(),
-              ],
+            FutureBuilder(
+              future: storeModels,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  // 데이터가 있다면 정상적으로 처리
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        for (var store in snapshot.data!)
+                          StoreWidget(
+                            storeName: store.storeName,
+                            mainFood: store.mainFood,
+                            price: store.price,
+                            picture: store.picture,
+                            latitude: store.latitude,
+                            longitude: store.longitude,
+                            reviewCount: store.reviewCount,
+                            workingTime: store.workingTime,
+                            callNumber: store.callNumber,
+                            address: store.address,
+                            introduction: store.introduction,
+                            recommend: store.recommend,
+                          )
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Center(child: Text('No data available'));
+                }
+              },
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Column(
-                      children: [Icon(Icons.store), Text("가게")],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TagandRecomm(isValid: false)));
-                      },
-                      child: Transform.translate(
-                        offset: const Offset(20, -10),
-                        child: Container(
-                          width: 65,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const Column(
-                            children: [
-                              Icon(Icons.brush, color: Colors.white),
-                              Text(
-                                "후기",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                "작성하기",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Column(
-                      children: [Icon(Icons.person), Text("마이페이지")],
-                    )
-                  ],
-                ),
-              ),
-            )
           ],
         ),
+      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: BottomNavigationBar(items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.store), label: "가게"),
+          BottomNavigationBarItem(icon: Icon(Icons.brush), label: "리뷰 작성하기"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "마이페이지"),
+        ]),
       ),
     );
   }
 }
 
 class StoreWidget extends StatelessWidget {
-  const StoreWidget({
+  final String storeName, price, mainFood, picture, reviewCount, workingTime, callNumber, address, introduction, recommend;
+  final double latitude, longitude;
+  int dist = 0;
+
+  StoreWidget({
+    required this.storeName,
+    required this.price,
+    required this.mainFood,
+    required this.latitude,
+    required this.longitude,
+    required this.picture,
+    required this.reviewCount,
+    required this.workingTime,
+    required this.callNumber,
+    required this.address,
+    required this.introduction,
+    required this.recommend,
     super.key,
   });
 
+  void someMethod() {
+    final x = centerX - latitude;
+    final realX = ((x < 0) ? x * (-1) : x) * 10000;
+    final y = centerY - longitude;
+    final realY = ((y < 0) ? y * (-1) : y) * 10000;
+
+    dist = math.sqrt(math.pow(realX * 11, 2) + math.pow(realY * 9, 2)).toInt();
+  }
+
   @override
   Widget build(BuildContext context) {
+    DecorationImage image;
+    if (picture == 'assets/background.jpeg') {
+      image = DecorationImage(
+        image: AssetImage(picture),
+        fit: BoxFit.cover,
+      );
+    } else {
+      image = DecorationImage(
+        image: AssetImage(picture),
+        //image: NetworkImage(picture),
+        fit: BoxFit.cover,
+      );
+    }
+
+    someMethod();
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DetailStore()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DetailStore(
+                  storeName: storeName,
+                  price: price,
+                  mainFood: mainFood,
+                  latitude: latitude,
+                  longitude: longitude,
+                  picture: picture,
+                  reviewCount: reviewCount,
+                  workingTime: workingTime,
+                  callNumber: callNumber,
+                  address: address,
+                  introduction: introduction,
+                  recommend: recommend,
+                  isWritten: false,
+                )));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -293,10 +347,7 @@ class StoreWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.blue,
             borderRadius: BorderRadius.circular(25),
-            image: const DecorationImage(
-              image: AssetImage("assets/background.jpeg"),
-              fit: BoxFit.cover,
-            ),
+            image: image,
           ),
           child: Stack(
             children: [
@@ -339,61 +390,61 @@ class StoreWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 bottom: 20,
                 left: 0,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("뒤집어진 뚝배기",
-                          style: TextStyle(
+                      Text(storeName,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w900,
                           )),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text("6,000원",
-                              style: TextStyle(
-                                color: Color.fromRGBO(208, 232, 51, 1),
+                          Text(price,
+                              style: const TextStyle(
+                                color: Color.fromRGBO(139, 237, 175, 1),
                                 fontSize: 22,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w900,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text("김치찌개",
-                              style: TextStyle(
+                          Text(mainFood,
+                              style: const TextStyle(
                                 color: Color.fromRGBO(222, 222, 227, 1),
                                 fontSize: 13,
                               )),
-                          SizedBox(
-                            width: 110,
+                          const SizedBox(
+                            width: 100,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.room,
                             color: Color.fromRGBO(184, 184, 190, 1),
                             size: 15,
                           ),
-                          SizedBox(width: 1),
-                          Text("500m",
-                              style: TextStyle(
+                          const SizedBox(width: 1),
+                          Text('${dist}m',
+                              style: const TextStyle(
                                 color: Color.fromRGBO(184, 184, 190, 1),
                                 fontSize: 12,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.star,
                             color: Color.fromRGBO(184, 184, 190, 1),
                             size: 15,
                           ),
-                          SizedBox(width: 1),
-                          Text("4.6",
+                          const SizedBox(width: 1),
+                          const Text("4.6",
                               style: TextStyle(
                                 color: Color.fromRGBO(184, 184, 190, 1),
                                 fontSize: 12,

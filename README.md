@@ -31,7 +31,10 @@ A new Flutter project.
 - **싼 가격에 대한 품질 불신**으로 소비자 선호도 하락  
 - 향후 확대를 고려한 **출발지 선정**:  
   - 경부선·호남선 모두 지나는 유일한 도시, 대전  
-  - 유동 인구 많고 2030 비중 높은 지역  
+  - 유동 인구 많고 2030 비중 높은 지역
+- 시나리오 플로우
+- <img width="710" alt="image" src="https://github.com/user-attachments/assets/efd5c25a-5776-4cc0-9c29-74e3a6898289" />
+
 
 # 3. 목표
 - ‘착한가격업소’를 한눈에 모아 보여주고, **손쉬운 접근성** 제공  
@@ -52,10 +55,16 @@ A new Flutter project.
 - **제휴 이벤트(쿠폰 등)**를 통한 추가 홍보 채널 확보  
 
 # 7. 구현 내용
-- **홈 화면**: 지역 선택, 리스트·검색·필터·정렬  
-- **가게 상세 보기**: 영수증 인증 마크, 시세 비교, 리뷰·추천  
-- **후기 작성 페이지**: 영수증 업로드 → 리뷰 작성 → 태그 선택  
-- **마이페이지**: 찜한 가게·내 리뷰 관리  
+- **홈 화면**: 지역 선택, 리스트·검색·필터·정렬
+- <img width="275" alt="image" src="https://github.com/user-attachments/assets/936bcc9d-622d-4626-a07e-2f63792d9003" />
+- **가게 상세 보기**: 영수증 인증 마크, 시세 비교, 리뷰·추천
+- <img width="273" alt="image" src="https://github.com/user-attachments/assets/d23b1569-45f4-4671-a3a9-5f2670609f87" />
+- **후기 작성 페이지**: 영수증 업로드 → 리뷰 작성 → 태그 선택
+- <img width="275" alt="image" src="https://github.com/user-attachments/assets/d5a22cb9-5d5c-49df-8778-251dd660c36a" />
+- <img width="275" alt="image" src="https://github.com/user-attachments/assets/ff018a36-9e36-4031-a95a-911b92d7014e" />
+- <img width="275" alt="image" src="https://github.com/user-attachments/assets/7f1a8a26-53bd-4448-b543-32e4cc2fcd1e" />
+- <img width="272" alt="image" src="https://github.com/user-attachments/assets/021c826c-1ede-476a-8a18-6a564ae1c6c1" />
+- <img width="276" alt="image" src="https://github.com/user-attachments/assets/1a94d909-2757-48e8-bdd3-e407fbbf997d" />
 - **브랜딩 적용**: 태그 모티프, 그린 메인 컬러, 2030 타깃 UI  
 
 

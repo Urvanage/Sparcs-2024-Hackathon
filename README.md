@@ -56,9 +56,9 @@ A new Flutter project.
 
 # 7. 구현 내용
 - **홈 화면**: 지역 선택, 리스트·검색·필터·정렬
-  <img width="275" alt="image" src="https://github.com/user-attachments/assets/936bcc9d-622d-4626-a07e-2f63792d9003" />
+- <img width="275" alt="image" src="https://github.com/user-attachments/assets/936bcc9d-622d-4626-a07e-2f63792d9003" />
 - **가게 상세 보기**: 영수증 인증 마크, 시세 비교, 리뷰·추천
-  <img width="273" alt="image" src="https://github.com/user-attachments/assets/d23b1569-45f4-4671-a3a9-5f2670609f87" />
+- <img width="273" alt="image" src="https://github.com/user-attachments/assets/d23b1569-45f4-4671-a3a9-5f2670609f87" />
 - **후기 작성 페이지**  
   <div style="text-align:center">
     <img src="https://github.com/user-attachments/assets/d5a22cb9-5d5c-49df-8778-251dd660c36a" width="150" />

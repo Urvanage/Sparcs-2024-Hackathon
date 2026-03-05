@@ -1,6 +1,54 @@
 # front
 
-A new Flutter project.
+A Flutter-based mobile application developed to promote **“Good Price Stores” (착한가격업소)** and improve their accessibility and visibility.
+The application allows users to easily browse participating stores, compare prices, and leave reviews.
+
+## Key Contributions
+- Implemented UI and screen structure using Flutter widgets
+- Integrated backend data through HTTP requests and JSON parsing
+- Developed store browsing, filtering, and review submission interfaces
+
+---
+
+## Tech Stack
+
+- **Framework / Language**: Flutter (Dart)
+- **Development Environment**: VSCode, Android Studio
+- **Test Environment**: iPhone 14 Emulator
+- **UI Development**: Flutter widget-based interface
+- **Backend Communication**: HTTP GET request with JSON parsing
+
+---
+
+## Project Background
+
+- Many **Good Price Stores** have low public awareness, leading to limited promotion.
+- Only **22 user reviews since 2019**, indicating insufficient user engagement and information updates.
+- Consumers often distrust low prices due to **concerns about quality**.
+- The project focuses on **Daejeon** as the initial deployment location due to:
+  - High population flow
+  - A large proportion of people in their 20s–30s
+  - A transportation hub connecting major railway lines.
+
+---
+
+## Goal
+
+- Provide a **centralized platform** to easily discover Good Price Stores
+- Enable **information update requests** to keep store data current
+- Reduce distrust through **price comparison and reviews**
+- Offer **reasonable consumption options** for both residents and travelers in Daejeon
+
+---
+
+## Team
+
+- **Planning / Presentation**: Hyunsol Park  
+- **Design**: Hyerim Kim  
+- **Frontend Development**: Junghwan Kim  
+- **Backend Development**: Jaeyoung Yoo  
+
+---
 
 # 0. 담당한 기능 개발 및 구현 기술
 - **플랫폼 및 개발 언어**: Flutter (Dart)
